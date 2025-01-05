@@ -24,7 +24,6 @@ export default [
     },
     rules: {
       "react/react-in-jsx-scope": "off", // Si usas React 17 o superior, no es necesario importar React
-      "react/jsx-no-target-blank": ["error", { "allowReferrer": true }], // Configura la regla para permitir rel="noreferrer"
     },
   },
   {
@@ -40,8 +39,7 @@ export default [
     files: ["**/*.{jsx,tsx}"],
     rules: {
       ...pluginReact.configs.recommended.rules,
-      "react/react-in-jsx-scope": "off", // Asegúrate de desactivar esta regla aquí también
-      "react/jsx-no-target-blank": ["error", { "allowReferrer": true }], // Configura la regla para permitir rel="noreferrer"
+      "react/react-in-jsx-scope": "off", // Si usas React 17 o superior, no es necesario importar React
     },
   },
 ];

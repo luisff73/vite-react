@@ -61,21 +61,11 @@ pipeline {
             }
         }
 
-        stage('Commit_and_Push') {
+        stage('Push_Changes') {
             steps {
                 script {
-                    // Configura el usuario de Git
-                    sh 'git config user.name "luisff73"'
-                    sh 'git config user.email "jvrluis@hotmail.com"'
-                    
-                    // Añade los cambios y haz commit
-                    sh 'git add README.md'
-                    sh 'git commit -m "Update README.md with test results [ci skip]"'
-                    
-                    // Haz push de los cambios al repositorio remoto
-                    withCredentials([usernamePassword(credentialsId: 'your-credentials-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                        sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/luisff73/vite-react.git HEAD:ci_jenkins'
-                    }
+                    // Ejecuta el script para hacer add, commit y push de los cambios
+                    sh "node jenkinsScripts/pushChanges.mjs '${params.Executor}' '${params.Motivo}'"
                 }
             }
         }
