@@ -64,8 +64,9 @@ pipeline {
         stage('Push_Changes') {
             steps {
                 script {
-                    // Ejecuta el script para hacer add, commit y push de los cambios
-                    sh "node jenkinsScripts/pushChanges.mjs '${params.Executor}' '${params.Motivo}'"
+                    withCredentials([usernamePassword(credentialsId: 'github-credentials-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        sh "node jenkinsScripts/pushChanges.mjs '${params.Executor}' '${params.Motivo}' '${GIT_USERNAME}' '${GIT_PASSWORD}'"
+                    }
                 }
             }
         }
