@@ -13,11 +13,15 @@ fs.readFile(readmePath, 'utf8', (err, data) => {
     process.exit(1);
   }
 
+  console.log('Current README.md content:', data);
+
   const resultText = 'RESULTADO DE LOS ULTIMOS TESTS';
   const badge = testResult === 'success' ? badgeSuccess : badgeFailure;
   const newData = data.includes(resultText)
     ? data.replace(new RegExp(`${resultText}.*`, 'g'), `${resultText}\n${badge}`)
     : `${data}\n\n${resultText}\n${badge}`;
+
+  console.log('New README.md content:', newData);
 
   fs.writeFile(readmePath, newData, 'utf8', (err) => {
     if (err) {
