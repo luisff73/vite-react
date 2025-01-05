@@ -56,7 +56,7 @@ pipeline {
                     def testResult = currentBuild.result == 'SUCCESS' ? 'success' : 'failure'
                     
                     // Ejecuta el script para actualizar el README.md
-                    sh "node jenkinsScripts/updateReadme.js ${testResult}"
+                    sh "node jenkinsScripts/updateReadme.mjs ${testResult}"
                 }
             }
         }
