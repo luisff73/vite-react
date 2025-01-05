@@ -27,14 +27,6 @@ export default [
       "react/jsx-no-target-blank": ["error", { "allowReferrer": true }], // Configura la regla para permitir rel="noreferrer"
     },
   },
-  {
-    rules: {
-      ...tseslint.configs.recommended.rules,
-    },
-  },
-  {
-    rules: {
-      ...pluginReact.configs.recommended.rules,
-    },
-  },
+  tseslint.configs.recommended,
+  pluginReact.configs.recommended,
 ];
