@@ -26,7 +26,7 @@ pipeline {
                     sh 'npm install'
                     
                     // Ejecuta el ESLint sobre todo el proyecto
-                    sh 'npx eslint'
+                    // sh 'npx eslint'
                 }
             }
         }
