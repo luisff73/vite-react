@@ -1,6 +1,7 @@
 import globals from "globals";
-import tseslint from "typescript-eslint";
+import tseslint from "@typescript-eslint/eslint-plugin";
 import pluginReact from "eslint-plugin-react";
+import tsParser from "@typescript-eslint/parser";
 
 /** @type {import('eslint').Linter.Config[]} */
 export default [
@@ -10,9 +11,11 @@ export default [
       globals: globals.browser,
       ecmaVersion: "latest",
       sourceType: "module",
+      parser: tsParser,
     },
     plugins: {
       react: pluginReact,
+      "@typescript-eslint": tseslint,
     },
     settings: {
       react: {
@@ -25,5 +28,5 @@ export default [
     },
   },
   ...tseslint.configs.recommended,
-  pluginReact.configs.flat.recommended,
+  pluginReact.configs.recommended,
 ];
