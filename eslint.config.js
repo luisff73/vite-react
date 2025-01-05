@@ -29,6 +29,9 @@ export default [
   },
   {
     files: ["**/*.{ts,tsx}"],
+    languageOptions: {
+      parser: tsParser,
+    },
     rules: {
       ...tseslint.configs.recommended.rules,
     },
@@ -37,6 +40,8 @@ export default [
     files: ["**/*.{jsx,tsx}"],
     rules: {
       ...pluginReact.configs.recommended.rules,
+      "react/react-in-jsx-scope": "off", // Asegúrate de desactivar esta regla aquí también
+      "react/jsx-no-target-blank": ["error", { "allowReferrer": true }], // Configura la regla para permitir rel="noreferrer"
     },
   },
 ];

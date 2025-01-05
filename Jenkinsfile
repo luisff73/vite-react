@@ -5,7 +5,7 @@ pipeline {
         string(name: 'Motivo', defaultValue: '', description: 'Motivo para ejecutar la pipeline')
         string(name: 'ChatID', defaultValue: '', description: 'Chat ID de Telegram para notificaciones')
     }
-        tools {
+    tools {
         nodejs 'Node' // Usa la instalación de NodeJS configurada en Jenkins
     }
     stages {
@@ -26,7 +26,7 @@ pipeline {
                     sh 'npm install'
                     
                     // Ejecuta el ESLint sobre todo el proyecto
-                    // sh 'npx eslint'
+                    sh 'npx eslint'
                 }
             }
         }
@@ -57,6 +57,25 @@ pipeline {
                     
                     // Ejecuta el script para actualizar el README.md
                     sh "node jenkinsScripts/updateReadme.mjs ${testResult}"
+                }
+            }
+        }
+
+        stage('Commit_and_Push') {
+            steps {
+                script {
+                    // Configura el usuario de Git
+                    sh 'git config user.name "luisff73"'
+                    sh 'git config user.email "jvrluis@hotmail.com"'
+                    
+                    // Añade los cambios y haz commit
+                    sh 'git add README.md'
+                    sh 'git commit -m "Update README.md with test results [ci skip]"'
+                    
+                    // Haz push de los cambios al repositorio remoto
+                    withCredentials([usernamePassword(credentialsId: 'your-credentials-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+                        sh 'git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/luisff73/vite-react.git HEAD:ci_jenkins'
+                    }
                 }
             }
         }
