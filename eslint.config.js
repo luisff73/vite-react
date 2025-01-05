@@ -14,8 +14,14 @@ export default [
     plugins: {
       react: pluginReact,
     },
+    settings: {
+      react: {
+        version: "detect", // Detecta automáticamente la versión de React
+      },
+    },
     rules: {
       "react/react-in-jsx-scope": "off", // Si usas React 17 o superior, no es necesario importar React
+      "react/jsx-no-target-blank": ["error", { "allowReferrer": true }], // Configura la regla para permitir rel="noreferrer"
     },
   },
   ...tseslint.configs.recommended,
