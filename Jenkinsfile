@@ -5,6 +5,9 @@ pipeline {
         string(name: 'Motivo', defaultValue: '', description: 'Motivo para ejecutar la pipeline')
         string(name: 'ChatID', defaultValue: '', description: 'Chat ID de Telegram para notificaciones')
     }
+        tools {
+        nodejs 'Node' // Usa la instalación de NodeJS configurada en Jenkins
+    }
     stages {
         stage('Peticion de datos') {
             steps {

@@ -19,11 +19,6 @@ fs.readFile(readmePath, 'utf8', (err, data) => {
     ? data.replace(new RegExp(`${resultText}.*`, 'g'), `${resultText}\n${badge}`)
     : `${data}\n\n${resultText}\n${badge}`;
 
-  fs.writeFile(readmePath, newData, 'utf8', (err) => {
-    if (err) {
-      console.error('Error writing README.md:', err);
-      process.exit(1);
-    }
-    console.log('README.md updated successfully.');
-  });
+  fs.writeFile(readmePath, newData, 'utf8');
 });
+
