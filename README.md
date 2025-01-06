@@ -80,8 +80,12 @@ Finalmente enviaremos un mensaje a través de Telegram que resumira el estado fi
 
 # Documentación y explicación del proyecto.  
 
+Para este proyecto utilizaremos un proyecto base en React / Vite que posteriormente desplegaremos en Vercel.
+
+Una vez en local e iniciado el repositorio, crearemos una rama ci_jenkins para trabajar en este proyecto.  
 
 ![Imagen1](images/Imagen1.png)
+
 
 
 
