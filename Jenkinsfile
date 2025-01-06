@@ -84,6 +84,7 @@ pipeline {
             steps {
                 script {
                     def testResultStatus = testResult == 'SUCCESS' ? 'success' : 'failure'
+                    echo "Luis Test Result Status: ${testResultStatus}"
                     sh "node jenkinsScripts/updateReadme.mjs ${testResultStatus}"
                 }
             }
