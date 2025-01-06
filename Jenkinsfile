@@ -144,24 +144,29 @@ pipeline {
             }
         }
 
-        stage('Notificacion') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'telegram-bot-token', variable: 'TELEGRAM_BOT_TOKEN')]) {
-                        def message = """
-                        Se ha ejecutado la pipeline de jenkins con los siguientes resultados:
-                        - Linter_stage: ${env.LINTER_STAGE_RESULT}
-                        - Test_stage: ${env.TEST_STAGE_RESULT}
-                        - Update_readme_stage: ${env.UPDATE_README_STAGE_RESULT}
-                        - Deploy_to_Vercel_stage: ${env.DEPLOY_TO_VERCEL_STAGE_RESULT}
-                        """
-                        sh """
-                        curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${params.ChatID} -d text="${message}"
-                        """
-                    }
-                }
+stage('Notificacion') {
+    steps {
+        script {
+            withCredentials([string(credentialsId: 'telegram-bot-token', variable: 'TELEGRAM_BOT_TOKEN')]) {
+                echo "Linter_stage: ${env.LINTER_STAGE_RESULT}"
+                echo "Test_stage: ${env.TEST_STAGE_RESULT}"
+                echo "Update_readme_stage: ${env.UPDATE_README_STAGE_RESULT}"
+                echo "Deploy_to_Vercel_stage: ${env.DEPLOY_TO_VERCEL_STAGE_RESULT}"
+                
+                def message = """
+                Se ha ejecutado la pipeline de jenkins con los siguientes resultados:
+                - Linter_stage: ${env.LINTER_STAGE_RESULT}
+                - Test_stage: ${env.TEST_STAGE_RESULT}
+                - Update_readme_stage: ${env.UPDATE_README_STAGE_RESULT}
+                - Deploy_to_Vercel_stage: ${env.DEPLOY_TO_VERCEL_STAGE_RESULT}
+                """
+                sh """
+                curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${params.ChatID} -d text="${message}"
+                """
             }
         }
+    }
+}
     }
     post {
         always {
