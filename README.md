@@ -78,6 +78,14 @@ Notificación: Envía el resultado de las etapas a través de Telegram.
 
 Finalmente enviaremos un mensaje a través de Telegram que resumira el estado final de cada etapa al final de la ejecución.  
 
+# Documentación y explicación del proyecto.  
+
+
+![Imagen1](images/Imagen1.png)
+
+
+
+
 
 RESULTADO DE LOS ULTIMOS TESTS
 ![Success](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)
