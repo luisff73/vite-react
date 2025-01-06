@@ -39,14 +39,14 @@ pipeline {
                 success {
                     script {
                         currentBuild.description = (currentBuild.description ?: '') + "\nLinter stage: SUCCESS"
-                        env.LINTER_STAGE_RESULT = 'SUCCESS'
+                        currentBuild.result = 'SUCCESS'
                         echo "Linter stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
                         currentBuild.description = (currentBuild.description ?: '') + "\nLinter stage: FAILURE"
-                        env.LINTER_STAGE_RESULT = 'FAILURE'
+                        currentBuild.result = 'FAILURE'
                         echo "Linter stage result set to FAILURE"
                     }
                 }
@@ -64,14 +64,14 @@ pipeline {
                 success {
                     script {
                         currentBuild.description = (currentBuild.description ?: '') + "\nTest stage: SUCCESS"
-                        env.TEST_STAGE_RESULT = 'SUCCESS'
+                        currentBuild.result = 'SUCCESS'
                         echo "Test stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
                         currentBuild.description = (currentBuild.description ?: '') + "\nTest stage: FAILURE"
-                        env.TEST_STAGE_RESULT = 'FAILURE'
+                        currentBuild.result = 'FAILURE'
                         echo "Test stage result set to FAILURE"
                     }
                 }
@@ -101,14 +101,14 @@ pipeline {
                 success {
                     script {
                         currentBuild.description = (currentBuild.description ?: '') + "\nUpdate Readme stage: SUCCESS"
-                        env.UPDATE_README_STAGE_RESULT = 'SUCCESS'
+                        currentBuild.result = 'SUCCESS'
                         echo "Update Readme stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
                         currentBuild.description = (currentBuild.description ?: '') + "\nUpdate Readme stage: FAILURE"
-                        env.UPDATE_README_STAGE_RESULT = 'FAILURE'
+                        currentBuild.result = 'FAILURE'
                         echo "Update Readme stage result set to FAILURE"
                     }
                 }
@@ -146,14 +146,14 @@ pipeline {
                 success {
                     script {
                         currentBuild.description = (currentBuild.description ?: '') + "\nDeploy to Vercel stage: SUCCESS"
-                        env.DEPLOY_TO_VERCEL_STAGE_RESULT = 'SUCCESS'
+                        currentBuild.result = 'SUCCESS'
                         echo "Deploy to Vercel stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
                         currentBuild.description = (currentBuild.description ?: '') + "\nDeploy to Vercel stage: FAILURE"
-                        env.DEPLOY_TO_VERCEL_STAGE_RESULT = 'FAILURE'
+                        currentBuild.result = 'FAILURE'
                         echo "Deploy to Vercel stage result set to FAILURE"
                     }
                 }
@@ -164,17 +164,22 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'telegram-bot-token', variable: 'TELEGRAM_BOT_TOKEN')]) {
-                        echo "Linter_stage: ${env.LINTER_STAGE_RESULT}"
-                        echo "Test_stage: ${env.TEST_STAGE_RESULT}"
-                        echo "Update_readme_stage: ${env.UPDATE_README_STAGE_RESULT}"
-                        echo "Deploy_to_Vercel_stage: ${env.DEPLOY_TO_VERCEL_STAGE_RESULT}"
+                        def linterResult = currentBuild.description.contains("Linter stage: SUCCESS") ? "SUCCESS" : "FAILURE"
+                        def testResult = currentBuild.description.contains("Test stage: SUCCESS") ? "SUCCESS" : "FAILURE"
+                        def updateReadmeResult = currentBuild.description.contains("Update Readme stage: SUCCESS") ? "SUCCESS" : "FAILURE"
+                        def deployToVercelResult = currentBuild.description.contains("Deploy to Vercel stage: SUCCESS") ? "SUCCESS" : "FAILURE"
+
+                        echo "Linter_stage: ${linterResult}"
+                        echo "Test_stage: ${testResult}"
+                        echo "Update_readme_stage: ${updateReadmeResult}"
+                        echo "Deploy_to_Vercel_stage: ${deployToVercelResult}"
                         
                         def message = """
                         Se ha ejecutado la pipeline de jenkins con los siguientes resultados:
-                        - Linter_stage: ${env.LINTER_STAGE_RESULT}
-                        - Test_stage: ${env.TEST_STAGE_RESULT}
-                        - Update_readme_stage: ${env.UPDATE_README_STAGE_RESULT}
-                        - Deploy_to_Vercel_stage: ${env.DEPLOY_TO_VERCEL_STAGE_RESULT}
+                        - Linter_stage: ${linterResult}
+                        - Test_stage: ${testResult}
+                        - Update_readme_stage: ${updateReadmeResult}
+                        - Deploy_to_Vercel_stage: ${deployToVercelResult}
                         """
                         sh """
                         curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${params.ChatID} -d text="${message}"
