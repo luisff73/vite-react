@@ -38,12 +38,14 @@ pipeline {
             post {
                 success {
                     script {
+                        currentBuild.description = (currentBuild.description ?: '') + "\nLinter stage: SUCCESS"
                         env.LINTER_STAGE_RESULT = 'SUCCESS'
                         echo "Linter stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
+                        currentBuild.description = (currentBuild.description ?: '') + "\nLinter stage: FAILURE"
                         env.LINTER_STAGE_RESULT = 'FAILURE'
                         echo "Linter stage result set to FAILURE"
                     }
@@ -61,12 +63,14 @@ pipeline {
             post {
                 success {
                     script {
+                        currentBuild.description = (currentBuild.description ?: '') + "\nTest stage: SUCCESS"
                         env.TEST_STAGE_RESULT = 'SUCCESS'
                         echo "Test stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
+                        currentBuild.description = (currentBuild.description ?: '') + "\nTest stage: FAILURE"
                         env.TEST_STAGE_RESULT = 'FAILURE'
                         echo "Test stage result set to FAILURE"
                     }
@@ -96,12 +100,14 @@ pipeline {
             post {
                 success {
                     script {
+                        currentBuild.description = (currentBuild.description ?: '') + "\nUpdate Readme stage: SUCCESS"
                         env.UPDATE_README_STAGE_RESULT = 'SUCCESS'
                         echo "Update Readme stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
+                        currentBuild.description = (currentBuild.description ?: '') + "\nUpdate Readme stage: FAILURE"
                         env.UPDATE_README_STAGE_RESULT = 'FAILURE'
                         echo "Update Readme stage result set to FAILURE"
                     }
@@ -139,12 +145,14 @@ pipeline {
             post {
                 success {
                     script {
+                        currentBuild.description = (currentBuild.description ?: '') + "\nDeploy to Vercel stage: SUCCESS"
                         env.DEPLOY_TO_VERCEL_STAGE_RESULT = 'SUCCESS'
                         echo "Deploy to Vercel stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
+                        currentBuild.description = (currentBuild.description ?: '') + "\nDeploy to Vercel stage: FAILURE"
                         env.DEPLOY_TO_VERCEL_STAGE_RESULT = 'FAILURE'
                         echo "Deploy to Vercel stage result set to FAILURE"
                     }
