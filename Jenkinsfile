@@ -8,13 +8,19 @@ pipeline {
     tools {
         nodejs 'Node'
     }
-    environment {
-        LINTER_RESULT = 'PENDING'
-        TEST_RESULT = 'PENDING'
-        UPDATE_README_RESULT = 'PENDING'
-        DEPLOY_TO_VERCEL_RESULT = 'PENDING'
-    }
     stages {
+        stage('Inicialización de Variables') {
+            steps {
+                script {
+                    // Inicializar variables globales
+                    linterResult = 'PENDING'
+                    testResult = 'PENDING'
+                    updateReadmeResult = 'PENDING'
+                    deployToVercelResult = 'PENDING'
+                }
+            }
+        }
+
         stage('Peticion de datos') {
             steps {
                 script {
@@ -35,12 +41,12 @@ pipeline {
             post {
                 success {
                     script {
-                        env.LINTER_RESULT = 'SUCCESS'
+                        linterResult = 'SUCCESS'
                     }
                 }
                 failure {
                     script {
-                        env.LINTER_RESULT = 'FAILURE'
+                        linterResult = 'FAILURE'
                     }
                 }
             }
@@ -55,12 +61,12 @@ pipeline {
             post {
                 success {
                     script {
-                        env.TEST_RESULT = 'SUCCESS'
+                        testResult = 'SUCCESS'
                     }
                 }
                 failure {
                     script {
-                        env.TEST_RESULT = 'FAILURE'
+                        testResult = 'FAILURE'
                     }
                 }
             }
@@ -77,19 +83,19 @@ pipeline {
         stage('Update_Readme') {
             steps {
                 script {
-                    def testResult = env.TEST_RESULT == 'SUCCESS' ? 'success' : 'failure'
-                    sh "node jenkinsScripts/updateReadme.mjs ${testResult}"
+                    def testResultStatus = testResult == 'SUCCESS' ? 'success' : 'failure'
+                    sh "node jenkinsScripts/updateReadme.mjs ${testResultStatus}"
                 }
             }
             post {
                 success {
                     script {
-                        env.UPDATE_README_RESULT = 'SUCCESS'
+                        updateReadmeResult = 'SUCCESS'
                     }
                 }
                 failure {
                     script {
-                        env.UPDATE_README_RESULT = 'FAILURE'
+                        updateReadmeResult = 'FAILURE'
                     }
                 }
             }
@@ -122,12 +128,12 @@ pipeline {
             post {
                 success {
                     script {
-                        env.DEPLOY_TO_VERCEL_RESULT = 'SUCCESS'
+                        deployToVercelResult = 'SUCCESS'
                     }
                 }
                 failure {
                     script {
-                        env.DEPLOY_TO_VERCEL_RESULT = 'FAILURE'
+                        deployToVercelResult = 'FAILURE'
                     }
                 }
             }
@@ -139,10 +145,10 @@ pipeline {
                     withCredentials([string(credentialsId: 'telegram-bot-token', variable: 'TELEGRAM_BOT_TOKEN')]) {
                         def message = """
                         Se ha ejecutado la pipeline de Jenkins con los siguientes resultados:
-                        - Linter stage: ${env.LINTER_RESULT}
-                        - Test stage: ${env.TEST_RESULT}
-                        - Update Readme stage: ${env.UPDATE_README_RESULT}
-                        - Deploy to Vercel stage: ${env.DEPLOY_TO_VERCEL_RESULT}
+                        - Linter stage: ${linterResult}
+                        - Test stage: ${testResult}
+                        - Update Readme stage: ${updateReadmeResult}
+                        - Deploy to Vercel stage: ${deployToVercelResult}
                         """
                         sh """
                         curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${params.ChatID} -d text="${message}"
