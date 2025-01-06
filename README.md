@@ -24,6 +24,7 @@ $ vercel
 
 RESULTADO DE LOS ULTIMOS TESTS
 ![Success](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)
+![Success](https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg)
 ![Failure](https://img.shields.io/badge/test-failure-red)
 ![Failure](https://img.shields.io/badge/test-failure-red)
 ![Failure](https://img.shields.io/badge/test-failure-red)
