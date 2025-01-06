@@ -23,7 +23,7 @@ $ vercel
 # Introducción
 Este proyecto utiliza una pipeline declarativa de Jenkins para gestionar el flujo completo de desarrollo, pruebas y despliegue de una aplicación. Una pipeline es una secuencia de etapas que automatiza los pasos necesarios para construir, probar y desplegar el software. Este enfoque permite mantener un proceso repetible, eficiente y consistente.
 
-## Conceptos Clave
+### Conceptos Clave
 Pipeline Declarativa:
 En Jenkins, las pipelines declarativas ofrecen una sintaxis más sencilla y estructurada para definir las tareas de integración y despliegue continuo (CI/CD). Esta sintaxis organiza las etapas (stages) y los pasos (steps) necesarios para ejecutar las tareas.
 
