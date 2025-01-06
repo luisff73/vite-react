@@ -8,6 +8,12 @@ pipeline {
     tools {
         nodejs 'Node' // Usa la instalación de NodeJS configurada en Jenkins
     }
+    environment {
+        LINTER_STAGE_RESULT = ''
+        TEST_STAGE_RESULT = ''
+        UPDATE_README_STAGE_RESULT = ''
+        DEPLOY_TO_VERCEL_STAGE_RESULT = ''
+    }
     stages {
         stage('Peticion de datos') {
             steps {
@@ -29,6 +35,18 @@ pipeline {
                     sh 'npx eslint'
                 }
             }
+            post {
+                success {
+                    script {
+                        env.LINTER_STAGE_RESULT = 'SUCCESS'
+                    }
+                }
+                failure {
+                    script {
+                        env.LINTER_STAGE_RESULT = 'FAILURE'
+                    }
+                }
+            }
         }
 
         stage('Test') {
@@ -36,6 +54,18 @@ pipeline {
                 script {
                     // Ejecuta los tests usando Jest
                     sh 'npm test -- --coverage'
+                }
+            }
+            post {
+                success {
+                    script {
+                        env.TEST_STAGE_RESULT = 'SUCCESS'
+                    }
+                }
+                failure {
+                    script {
+                        env.TEST_STAGE_RESULT = 'FAILURE'
+                    }
                 }
             }
         }
@@ -57,6 +87,18 @@ pipeline {
                     
                     // Ejecuta el script para actualizar el README.md
                     sh "node jenkinsScripts/updateReadme.mjs ${testResult}"
+                }
+            }
+            post {
+                success {
+                    script {
+                        env.UPDATE_README_STAGE_RESULT = 'SUCCESS'
+                    }
+                }
+                failure {
+                    script {
+                        env.UPDATE_README_STAGE_RESULT = 'FAILURE'
+                    }
                 }
             }
         }
@@ -85,6 +127,37 @@ pipeline {
                         
                         // Ejecuta el script para desplegar en Vercel
                         sh 'node jenkinsScripts/deployToVercel.mjs'
+                    }
+                }
+            }
+            post {
+                success {
+                    script {
+                        env.DEPLOY_TO_VERCEL_STAGE_RESULT = 'SUCCESS'
+                    }
+                }
+                failure {
+                    script {
+                        env.DEPLOY_TO_VERCEL_STAGE_RESULT = 'FAILURE'
+                    }
+                }
+            }
+        }
+
+        stage('Notificacion') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'telegram-bot-token', variable: 'TELEGRAM_BOT_TOKEN')]) {
+                        def message = """
+                        Se ha ejecutado la pipeline de jenkins con los siguientes resultados:
+                        - Linter_stage: ${env.LINTER_STAGE_RESULT}
+                        - Test_stage: ${env.TEST_STAGE_RESULT}
+                        - Update_readme_stage: ${env.UPDATE_README_STAGE_RESULT}
+                        - Deploy_to_Vercel_stage: ${env.DEPLOY_TO_VERCEL_STAGE_RESULT}
+                        """
+                        sh """
+                        curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${params.ChatID} -d text="${message}"
+                        """
                     }
                 }
             }
