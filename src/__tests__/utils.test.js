@@ -8,20 +8,20 @@ describe('Utility functions', () => {
   });
 
   // Test 2: Verificar si un número es par
-  test('checks if 4 is an even number', () => {
+  test('Test verificacion si 4 es un numero par', () => { 
     expect(isPar(4)).toBe(true);
   });
 
-  test('checks if 5 is not an even number', () => {
+  test('Test verificacion si 5 es un numero par', () => {
     expect(isPar(5)).toBe(false);
   });
 
   // Test 3: Verificar si un número es impar
-  test('checks if 5 is an odd number', () => {
+  test('Test verificacion si 5 es un numero impar', () => {
     expect(isImpar(5)).toBe(true);
   });
 
-  test('checks if 4 is not an odd number', () => {
+  test('Test verificacion si 4 es un numero impar', () => {
     expect(isImpar(4)).toBe(false);
   });
 });

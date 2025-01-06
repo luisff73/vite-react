@@ -77,5 +77,18 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy_to_Vercel') {
+            when {
+                expression {
+                    currentBuild.result == null || currentBuild.result == 'SUCCESS'
+                }
+            }
+            steps {
+                script {
+                    sh "node jenkinsScripts/deployToVercel.mjs"
+                }
+            }
+        }
     }
 }
