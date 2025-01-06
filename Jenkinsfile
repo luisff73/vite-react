@@ -39,11 +39,13 @@ pipeline {
                 success {
                     script {
                         env.LINTER_STAGE_RESULT = 'SUCCESS'
+                        echo "Linter stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
                         env.LINTER_STAGE_RESULT = 'FAILURE'
+                        echo "Linter stage result set to FAILURE"
                     }
                 }
             }
@@ -60,11 +62,13 @@ pipeline {
                 success {
                     script {
                         env.TEST_STAGE_RESULT = 'SUCCESS'
+                        echo "Test stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
                         env.TEST_STAGE_RESULT = 'FAILURE'
+                        echo "Test stage result set to FAILURE"
                     }
                 }
             }
@@ -93,11 +97,13 @@ pipeline {
                 success {
                     script {
                         env.UPDATE_README_STAGE_RESULT = 'SUCCESS'
+                        echo "Update Readme stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
                         env.UPDATE_README_STAGE_RESULT = 'FAILURE'
+                        echo "Update Readme stage result set to FAILURE"
                     }
                 }
             }
@@ -134,11 +140,13 @@ pipeline {
                 success {
                     script {
                         env.DEPLOY_TO_VERCEL_STAGE_RESULT = 'SUCCESS'
+                        echo "Deploy to Vercel stage result set to SUCCESS"
                     }
                 }
                 failure {
                     script {
                         env.DEPLOY_TO_VERCEL_STAGE_RESULT = 'FAILURE'
+                        echo "Deploy to Vercel stage result set to FAILURE"
                     }
                 }
             }
