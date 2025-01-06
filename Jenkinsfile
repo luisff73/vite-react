@@ -65,7 +65,14 @@ pipeline {
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'github-credentials-id', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-                        sh "node jenkinsScripts/pushChanges.mjs '${params.Executor}' '${params.Motivo}' '${GIT_USERNAME}' '${GIT_PASSWORD}'"
+                        sh([
+                            'node', 
+                            'jenkinsScripts/pushChanges.mjs', 
+                            params.Executor, 
+                            params.Motivo, 
+                            GIT_USERNAME, 
+                            GIT_PASSWORD
+                        ])
                     }
                 }
             }
