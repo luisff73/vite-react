@@ -6,13 +6,13 @@ pipeline {
         string(name: 'ChatID', defaultValue: '', description: 'Chat ID de Telegram para notificaciones')
     }
     tools {
-        nodejs 'Node' // Usa la instalación de NodeJS configurada en Jenkins
+        nodejs 'Node'
     }
     environment {
-        LINTER_STAGE_RESULT = ''
-        TEST_STAGE_RESULT = ''
-        UPDATE_README_STAGE_RESULT = ''
-        DEPLOY_TO_VERCEL_STAGE_RESULT = ''
+        LINTER_RESULT = 'PENDING'
+        TEST_RESULT = 'PENDING'
+        UPDATE_README_RESULT = 'PENDING'
+        DEPLOY_TO_VERCEL_RESULT = 'PENDING'
     }
     stages {
         stage('Peticion de datos') {
@@ -28,26 +28,19 @@ pipeline {
         stage('Linter') {
             steps {
                 script {
-                    // Instala dependencias si es necesario
                     sh 'npm install'
-                    
-                    // Ejecuta el ESLint sobre todo el proyecto
                     sh 'npx eslint'
                 }
             }
             post {
                 success {
                     script {
-                        currentBuild.description = (currentBuild.description ?: '') + "\nLinter stage: SUCCESS"
-                        currentBuild.result = 'SUCCESS'
-                        echo "Linter stage result set to SUCCESS"
+                        env.LINTER_RESULT = 'SUCCESS'
                     }
                 }
                 failure {
                     script {
-                        currentBuild.description = (currentBuild.description ?: '') + "\nLinter stage: FAILURE"
-                        currentBuild.result = 'FAILURE'
-                        echo "Linter stage result set to FAILURE"
+                        env.LINTER_RESULT = 'FAILURE'
                     }
                 }
             }
@@ -56,23 +49,18 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Ejecuta los tests usando Jest
                     sh 'npm test -- --coverage'
                 }
             }
             post {
                 success {
                     script {
-                        currentBuild.description = (currentBuild.description ?: '') + "\nTest stage: SUCCESS"
-                        currentBuild.result = 'SUCCESS'
-                        echo "Test stage result set to SUCCESS"
+                        env.TEST_RESULT = 'SUCCESS'
                     }
                 }
                 failure {
                     script {
-                        currentBuild.description = (currentBuild.description ?: '') + "\nTest stage: FAILURE"
-                        currentBuild.result = 'FAILURE'
-                        echo "Test stage result set to FAILURE"
+                        env.TEST_RESULT = 'FAILURE'
                     }
                 }
             }
@@ -81,7 +69,6 @@ pipeline {
         stage('Build') {
             steps {
                 script {
-                    // Construye el proyecto usando Vite
                     sh 'npm run build'
                 }
             }
@@ -90,26 +77,19 @@ pipeline {
         stage('Update_Readme') {
             steps {
                 script {
-                    // Determina el resultado de los tests
-                    def testResult = currentBuild.result == 'SUCCESS' ? 'success' : 'failure'
-                    
-                    // Ejecuta el script para actualizar el README.md
+                    def testResult = env.TEST_RESULT == 'SUCCESS' ? 'success' : 'failure'
                     sh "node jenkinsScripts/updateReadme.mjs ${testResult}"
                 }
             }
             post {
                 success {
                     script {
-                        currentBuild.description = (currentBuild.description ?: '') + "\nUpdate Readme stage: SUCCESS"
-                        currentBuild.result = 'SUCCESS'
-                        echo "Update Readme stage result set to SUCCESS"
+                        env.UPDATE_README_RESULT = 'SUCCESS'
                     }
                 }
                 failure {
                     script {
-                        currentBuild.description = (currentBuild.description ?: '') + "\nUpdate Readme stage: FAILURE"
-                        currentBuild.result = 'FAILURE'
-                        echo "Update Readme stage result set to FAILURE"
+                        env.UPDATE_README_RESULT = 'FAILURE'
                     }
                 }
             }
@@ -134,10 +114,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'vercel-token-id', variable: 'VERCEL_TOKEN')]) {
-                        // Instala la CLI de Vercel
                         sh 'npm install -g vercel'
-                        
-                        // Ejecuta el script para desplegar en Vercel
                         sh 'node jenkinsScripts/deployToVercel.mjs'
                     }
                 }
@@ -145,16 +122,12 @@ pipeline {
             post {
                 success {
                     script {
-                        currentBuild.description = (currentBuild.description ?: '') + "\nDeploy to Vercel stage: SUCCESS"
-                        currentBuild.result = 'SUCCESS'
-                        echo "Deploy to Vercel stage result set to SUCCESS"
+                        env.DEPLOY_TO_VERCEL_RESULT = 'SUCCESS'
                     }
                 }
                 failure {
                     script {
-                        currentBuild.description = (currentBuild.description ?: '') + "\nDeploy to Vercel stage: FAILURE"
-                        currentBuild.result = 'FAILURE'
-                        echo "Deploy to Vercel stage result set to FAILURE"
+                        env.DEPLOY_TO_VERCEL_RESULT = 'FAILURE'
                     }
                 }
             }
@@ -164,22 +137,12 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'telegram-bot-token', variable: 'TELEGRAM_BOT_TOKEN')]) {
-                        def linterResult = currentBuild.description.contains("Linter stage: SUCCESS") ? "SUCCESS" : "FAILURE"
-                        def testResult = currentBuild.description.contains("Test stage: SUCCESS") ? "SUCCESS" : "FAILURE"
-                        def updateReadmeResult = currentBuild.description.contains("Update Readme stage: SUCCESS") ? "SUCCESS" : "FAILURE"
-                        def deployToVercelResult = currentBuild.description.contains("Deploy to Vercel stage: SUCCESS") ? "SUCCESS" : "FAILURE"
-
-                        echo "Linter_stage: ${linterResult}"
-                        echo "Test_stage: ${testResult}"
-                        echo "Update_readme_stage: ${updateReadmeResult}"
-                        echo "Deploy_to_Vercel_stage: ${deployToVercelResult}"
-                        
                         def message = """
-                        Se ha ejecutado la pipeline de jenkins con los siguientes resultados:
-                        - Linter_stage: ${linterResult}
-                        - Test_stage: ${testResult}
-                        - Update_readme_stage: ${updateReadmeResult}
-                        - Deploy_to_Vercel_stage: ${deployToVercelResult}
+                        Se ha ejecutado la pipeline de Jenkins con los siguientes resultados:
+                        - Linter stage: ${env.LINTER_RESULT}
+                        - Test stage: ${env.TEST_RESULT}
+                        - Update Readme stage: ${env.UPDATE_README_RESULT}
+                        - Deploy to Vercel stage: ${env.DEPLOY_TO_VERCEL_RESULT}
                         """
                         sh """
                         curl -s -X POST https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage -d chat_id=${params.ChatID} -d text="${message}"
