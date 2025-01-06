@@ -19,3 +19,7 @@ You can deploy your new Vite project with a single command from your terminal us
 ```shell
 $ vercel
 ```
+
+
+RESULTADO DE LOS ULTIMOS TESTS
+![Failure](https://img.shields.io/badge/test-failure-red)
