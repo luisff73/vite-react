@@ -79,6 +79,10 @@ pipeline {
             }
             steps {
                 script {
+                    // Instala la CLI de Vercel
+                    sh 'npm install -g vercel'
+                    
+                    // Ejecuta el script para desplegar en Vercel
                     sh "node jenkinsScripts/deployToVercel.mjs"
                 }
             }
