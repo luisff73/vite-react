@@ -86,19 +86,43 @@ Una vez en local e iniciado el repositorio, crearemos una rama ci_jenkins para t
 
 ![Imagen1](images/Imagen1.png)  
 
+Para este proyecto necesitaremos instalar un plugin "Build Monitor" para ver todas las tareas ejecutadas en Jenkins.  
+Dentro de Jenkins, iremos a la opcion manage y Available Plugins, alli buscaremos el plugin y lo instalaremos.  
+
 ![Imagen2](images/Imagen2.png)  
+
+Una vez todo instalado, ya procedemos a crear el Jenkinsfile, y crearemos la primera Stage donde nos pedira tres parametros  
+que necesitaremos en el momento de ejecutar la pipeline.  
+En un primer lugar con la opcion "Parameters" definiremos los parametros, y despues crearemos una primera Stage donde nos pedira los datos.  
+
 ![Imagen3](images/Imagen3.png)  
+
+Ahora creamos una Stage Linter que ejecutará un linter sobre el proyecto de React.  
+
+Primero instalaresmo las dependencias por si es necesario.  
+
+Después introduciremos el comando "npx eslint" que ejecutará el Linter sobre el proyecto.  
+
 ![Imagen4](images/Imagen4.png)  
+
 ![Imagen5](images/Imagen5.png)  
+
 ![Imagen6](images/Imagen6.png)  
+
 ![Imagen7](images/Imagen7.png)  
+
 ![Imagen8](images/Imagen8.png)  
+
 ![Imagen9](images/Imagen9.png)  
+
 ![Imagen10](images/Imagen10.png)  
+
 ![Imagen11](images/Imagen11.png)  
+
 ![Imagen12](images/Imagen12.png)  
-![Imagen13](images/Imagen13.png)  
+
 ![Imagen14](images/Imagen14.png)  
+
 ![Imagen15](images/Imagen15.png)  
 
 
