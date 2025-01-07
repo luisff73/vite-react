@@ -84,21 +84,22 @@ Para este proyecto utilizaremos un proyecto base en React / Vite que posteriorme
 
 Una vez en local e iniciado el repositorio, crearemos una rama ci_jenkins para trabajar en este proyecto.  
 
-![Imagen1](images/Imagen1.png)
-![Imagen2](images/Imagen2.png)
-![Imagen3](images/Imagen3.png)
-![Imagen4](images/Imagen4.png)
-![Imagen5](images/Imagen5.png)
-![Imagen6](images/Imagen6.png)
-![Imagen7](images/Imagen7.png)
-![Imagen8](images/Imagen8.png)
-![Imagen9](images/Imagen9.png)
-![Imagen10](images/Imagen10.png)
-![Imagen11](images/Imagen11.png)
-![Imagen12](images/Imagen12.png)
-![Imagen13](images/Imagen13.png)
-![Imagen14](images/Imagen14.png)
-![Imagen15](images/Imagen15.png)
+![Imagen1](images/Imagen1.png)  
+
+![Imagen2](images/Imagen2.png)  
+![Imagen3](images/Imagen3.png)  
+![Imagen4](images/Imagen4.png)  
+![Imagen5](images/Imagen5.png)  
+![Imagen6](images/Imagen6.png)  
+![Imagen7](images/Imagen7.png)  
+![Imagen8](images/Imagen8.png)  
+![Imagen9](images/Imagen9.png)  
+![Imagen10](images/Imagen10.png)  
+![Imagen11](images/Imagen11.png)  
+![Imagen12](images/Imagen12.png)  
+![Imagen13](images/Imagen13.png)  
+![Imagen14](images/Imagen14.png)  
+![Imagen15](images/Imagen15.png)  
 
 
 
