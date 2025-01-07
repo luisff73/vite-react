@@ -91,23 +91,28 @@ Dentro de Jenkins, iremos a la opcion manage y Available Plugins, alli buscaremo
 
 ![Imagen2](images/Imagen2.png)  
 
-Una vez todo instalado, ya procedemos a crear el Jenkinsfile, y crearemos la primera Stage donde nos pedira tres parametros  
-que necesitaremos en el momento de ejecutar la pipeline.  
+Una vez todo instalado, ya procedemos a crear el Jenkinsfile, y crearemos la primera Stage donde nos pedira tres parametros que necesitaremos en el momento de ejecutar la pipeline.  
 En un primer lugar con la opcion "Parameters" definiremos los parametros, y despues crearemos una primera Stage donde nos pedira los datos.  
 
 ![Imagen3](images/Imagen3.png)  
 
 Ahora creamos una Stage Linter que ejecutará un linter sobre el proyecto de React.  
 
-Primero instalaresmo las dependencias por si es necesario.  
+Primero instalaremos las dependencias por si es necesario.  
 
 Después introduciremos el comando "npx eslint" que ejecutará el Linter sobre el proyecto.  
 
 ![Imagen4](images/Imagen4.png)  
 
+En la siguiente Stage llamada "Test" haremos un test del proyecto utilizando Jest.
+
 ![Imagen5](images/Imagen5.png)  
 
+Generamos un fichero "utils.js" que ejecutará tres tests.  
+
 ![Imagen6](images/Imagen6.png)  
+
+Posteriormente en la carpeta __tests__ crearemos un fichero utils.test.js donde definiremos las reglas del test.
 
 ![Imagen7](images/Imagen7.png)  
 
