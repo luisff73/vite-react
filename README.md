@@ -80,7 +80,6 @@ Finalmente enviaremos un mensaje a través de Telegram que resumira el estado fi
 
 # Documentación y explicación del proyecto.  
 
-
 ![Imagen1](images/Imagen1.png)
 
 
