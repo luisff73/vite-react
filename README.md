@@ -1,7 +1,7 @@
 # Introducción
-Este proyecto utiliza una pipeline declarativa de Jenkins para gestionar el flujo completo de desarrollo, pruebas y despliegue de una aplicación.  
-Una pipeline es una secuencia de etapas que automatiza los pasos necesarios para construir, probar y desplegar el software.  
-Este enfoque permite mantener un proceso repetible, eficiente y consistente.
+Este proyecto utiliza una pipeline declarativa de Jenkins para gestionar el flujo completo de desarrollo, pruebas y despliegue de una aplicación web.  
+Para ello se utiliza una pipeline que es una secuencia de etapas (Stages) que automatizan los pasos necesarios para construir, probar y desplegar el software.  
+Este enfoque de trabajo permite mantener un proceso repetible, eficiente y consistente.
 
 ### Conceptos Clave
 
