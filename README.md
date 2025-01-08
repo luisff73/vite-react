@@ -138,6 +138,10 @@ Despues generamos otra Stage que hara un push y un commit en el repositorio.
 
 ![Imagen11](images/Imagen11.png)  
 
+Esta Stage ejecutara el script pushChanges.mjs que recibira los argumentos introducidos por el usuario y las secrets de github almaceneadas en Jenkins y procedera a ejecutar el git add y git commit sobre el repositorio.  
+
+![Imagen13](images/Imagen13.png)
+
 Ahora ya procedemos con la siguiente Stage que ejeutara el despliege en Vercel.  
 
 La stage ejecutara un script llamado "deploytovercel" que recogera el token de vercel que hemos guardado en jenkins.  
