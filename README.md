@@ -1,7 +1,7 @@
 # Introducción
-Este proyecto utiliza una pipeline declarativa de Jenkins para gestionar el flujo completo de desarrollo, pruebas y despliegue de una aplicación.  
-Una pipeline es una secuencia de etapas que automatiza los pasos necesarios para construir, probar y desplegar el software.  
-Este enfoque permite mantener un proceso repetible, eficiente y consistente.
+Este proyecto utiliza una pipeline declarativa de Jenkins para gestionar el flujo completo de desarrollo, pruebas y despliegue de una aplicación web.  
+Para ello se utiliza una pipeline que es una secuencia de etapas (Stages) que automatizan los pasos necesarios para construir, probar y desplegar el software.  
+Este enfoque de trabajo permite mantener un proceso repetible, eficiente y consistente.
 
 ### Conceptos Clave
 
@@ -137,6 +137,10 @@ Esta seria la Stage que lanzaria el script del updatereadme.js.
 Despues generamos otra Stage que hara un push y un commit en el repositorio.  
 
 ![Imagen11](images/Imagen11.png)  
+
+Esta Stage ejecutara el script pushChanges.mjs que recibira los argumentos introducidos por el usuario y las secrets de github almaceneadas en Jenkins y procedera a ejecutar el git add y git commit sobre el repositorio.  
+
+![Imagen13](images/Imagen13.png)
 
 Ahora ya procedemos con la siguiente Stage que ejeutara el despliege en Vercel.  
 
