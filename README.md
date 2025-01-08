@@ -116,11 +116,25 @@ Posteriormente en la carpeta __tests__ crearemos un fichero utils.test.js donde 
 
 ![Imagen7](images/Imagen7.png)  
 
+Ahora vamos a crear una Stage llamada "build" que como su nombre indica hara un build del proyecto que posteriormente será publicado en Vercel.  
+
+Esta etapa solamente consta del comando "sh npm run build".  
+
 ![Imagen8](images/Imagen8.png)  
+
+Una vez finalizadas todas las Stages, vamos a crear una nueva llamada "Update readme" que ejecutara un script dentro de la carpeta jenkinsScripts que sera la encargada de actualizar el fichero readme.md del proyecto con los resultados de los tests badges.  
+
+Dependiendo del resultado mostrará lo siguiente:  
+o	(Failure) https://img.shields.io/badge/test-failure-red  
+o	(Success) https://img.shields.io/badge/tested%20with-Cypress-04C38E.svg  
 
 ![Imagen9](images/Imagen9.png)  
 
+Esta seria la Stage que lanzaria el script del updatereadme.js.  
+
 ![Imagen10](images/Imagen10.png)  
+
+Despues generamos otra Stage que hara un push y un commit en el repositorio.  
 
 ![Imagen11](images/Imagen11.png)  
 
