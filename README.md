@@ -138,6 +138,10 @@ Despues generamos otra Stage que hara un push y un commit en el repositorio.
 
 ![Imagen11](images/Imagen11.png)  
 
+Ahora ya procedemos con la siguiente Stage que ejeutara el despliege en Vercel.  
+
+La stage ejecutara un script llamado "deploytovercel" que recogera el token de vercel que hemos guardado en jenkins.  
+
 ![Imagen12](images/Imagen12.png)  
 
 ![Imagen14](images/Imagen14.png)  
