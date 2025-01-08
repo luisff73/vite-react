@@ -146,7 +146,13 @@ La stage ejecutara un script llamado "deploytovercel" que recogera el token de v
 
 ![Imagen14](images/Imagen14.png)  
 
-![Imagen15](images/Imagen15.png)  
+Finalmente haremos una ultima Stage denominada "Notificacio" que enviara un mensaje a través del boot de telegram con el resultado de los tests.  
+
+Esta stage recogera el token de telegram que hemos guardado en las credenciales de Jenkins, y utilizara como parametro el chatId que introduciremos en el momento de ejecutar la pipeline como parte de los parametros iniciales.  
+
+![Imagen15](images/Imagen15.png) 
+![Imagen16](images/Imagen16.png)
+
 
 
 
